@@ -1,8 +1,6 @@
 package com.nishant.game.test;
 
-import com.nishant.game.Dice;
-import com.nishant.game.Game;
-import com.nishant.game.Player;
+import com.nishant.game.*;
 import com.nishant.game.constants.GameStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,14 +15,14 @@ public class GameTest {
   @Before
   public void init() {
     game = new Game();
-    game.init(new ArrayList<>(List.of(getPlayer1(), getPlayer2())), getSnake(), getLadder());
+    game.init(new ArrayList<>(List.of(getPlayer1(), getPlayer2())), getSnakes(), getLadders());
   }
 
   @Test
   public void game_initialized_successfully() {
     Assert.assertEquals(game.getStatus(), GameStatus.IN_PROGRESS.toString());
-    Assert.assertEquals(game.getBoard().getLadder(), getLadder());
-    Assert.assertEquals(game.getBoard().getSnake(), getSnake());
+    Assert.assertEquals(game.getBoard().getLadders(), getLadders());
+    Assert.assertEquals(game.getBoard().getSnakes(), getSnakes());
     Assert.assertEquals(game.getPlayers(), new ArrayList<>(List.of(getPlayer1(), getPlayer2())));
   }
 
@@ -63,16 +61,20 @@ public class GameTest {
     Assert.assertEquals(game.getWinners().get(0).getPosition(), Integer.valueOf(100));
   }
 
-  public HashMap<Integer, Integer> getLadder() {
-    HashMap<Integer, Integer> ladder = new HashMap<>();
-    ladder.put(2, 98);
-    return ladder;
+  public HashMap<Integer, Ladder> getLadders() {
+    Ladder ladder = new Ladder(2, 98);
+    HashMap<Integer, Ladder> ladders = new HashMap<>();
+    ladders.put(ladder.getStart(), ladder);
+    return ladders;
   }
 
-  public HashMap<Integer, Integer> getSnake() {
-    HashMap<Integer, Integer> ladder = new HashMap<>();
-    ladder.put(99, 3);
-    return ladder;
+  public HashMap<Integer, Snake> getSnakes() {
+
+    Snake snake = new Snake(99, 3);
+    HashMap<Integer, Snake> snakes = new HashMap<>();
+    snakes.put(snake.getStart(), snake);
+
+    return snakes;
   }
 
   public Player getPlayer1() {

@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Board {
   private HashMap<Integer, Player> cells;
-  private HashMap<Integer, Integer> snake;
-  private HashMap<Integer, Integer> ladder;
+  private HashMap<Integer, Snake> snakes;
+  private HashMap<Integer, Ladder> ladders;
 
   public String checkCellStatus(int newPosition) {
     if (cells.containsKey(newPosition)) {
       return CellStatus.PLAYER_PRESENT.toString();
-    } else if (snake.containsKey(newPosition)) {
+    } else if (snakes.containsKey(newPosition)) {
       return CellStatus.SNAKE_PRESENT.toString();
-    } else if (ladder.containsKey(newPosition)) {
+    } else if (ladders.containsKey(newPosition)) {
       return CellStatus.LADDER_PRESENT.toString();
     } else if (newPosition == 100) {
       return CellStatus.WINNING_CELL.toString();

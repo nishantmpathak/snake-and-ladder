@@ -21,12 +21,11 @@ public class Game {
   private Queue<Player> queue;
 
   public void init(
-      ArrayList<Player> players,
-      HashMap<Integer, Integer> snake,
-      HashMap<Integer, Integer> ladder) {
+      ArrayList<Player> players, HashMap<Integer, Snake> snakes, HashMap<Integer, Ladder> ladders) {
     this.players = players;
     queue = new LinkedList<>(players);
-    board = new Board(new HashMap<>(), snake, ladder);
+
+    board = new Board(new HashMap<>(), snakes, ladders);
     status = GameStatus.IN_PROGRESS.toString();
     winners = new ArrayList<>();
   }
@@ -40,12 +39,12 @@ public class Game {
       movePlayerFromOldCellToCell(player, currentCell, newCell);
     } else if (StringUtils.equalsAnyIgnoreCase(
         newCellStatus, CellStatus.LADDER_PRESENT.toString())) {
-      newCell = board.getLadder().get(newCell);
+      newCell = board.getLadders().get(newCell).getEnd();
 
       movePlayerFromOldCellToCell(player, currentCell, newCell);
     } else if (StringUtils.equalsAnyIgnoreCase(
         newCellStatus, CellStatus.SNAKE_PRESENT.toString())) {
-      newCell = board.getSnake().get(newCell);
+      newCell = board.getSnakes().get(newCell).getEnd();
 
       movePlayerFromOldCellToCell(player, currentCell, newCell);
     } else if (StringUtils.equalsAnyIgnoreCase(
